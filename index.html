@@ -1,23 +1,619 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Naiot</title>
-  </head>
-  <body class="bg-zinc-100">
-    <nav class="bg-zinc-950 text-white">
-      <ul>
-        <li>Inicio</li>
-        <li>Turnos</li>
-        <li>Sobre mi</li>
-        <li>Contacto</li>
-      </ul>
-    </nav>
+<html lang="es">
 
-    <section>
-      <h1>Bienvenidos a Naiot</h1>
-    </section>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Naiot Barbería | Reservá tu turno</title>
+  <meta name="description"
+    content="Naiot Barbería - Los mejores cortes y barba. Reservá tu turno online y recibí confirmación por WhatsApp." />
+
+  <!-- Tailwind CSS v4 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <style type="text/tailwindcss">
+    @theme {
+      --color-gold: #c8a84e;
+      --color-gold-light: #e0c675;
+      --color-gold-dark: #a68a3a;
+      --color-dark: #0a0a0a;
+      --color-dark-card: #141414;
+      --color-dark-surface: #1a1a1a;
+      --color-dark-border: #2a2a2a;
+      --font-outfit: "Outfit", sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-dark text-white font-outfit">
+  <!-- ========== NAVBAR ========== -->
+  <nav id="navbar"
+    class="fixed top-0 w-full z-50 bg-dark/80 backdrop-blur-lg border-b border-dark-border transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <!-- Logo -->
+        <a href="#inicio" class="text-2xl sm:text-3xl font-black tracking-widest text-gold">
+          NAIOT
+        </a>
+
+        <!-- Desktop Nav -->
+        <ul class="hidden md:flex items-center gap-8">
+          <li>
+            <a href="#inicio" class="nav-link text-sm uppercase tracking-wider text-gray-300 hover:text-gold">Inicio</a>
+          </li>
+          <li>
+            <a href="#galeria"
+              class="nav-link text-sm uppercase tracking-wider text-gray-300 hover:text-gold">Galería</a>
+          </li>
+          <li>
+            <a href="#servicios"
+              class="nav-link text-sm uppercase tracking-wider text-gray-300 hover:text-gold">Servicios</a>
+          </li>
+          <li>
+            <a href="#turnos" class="nav-link text-sm uppercase tracking-wider text-gray-300 hover:text-gold">Turnos</a>
+          </li>
+          <li>
+            <a href="#contacto"
+              class="nav-link text-sm uppercase tracking-wider text-gray-300 hover:text-gold">Contacto</a>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Button -->
+        <button id="menu-btn" class="md:hidden text-gold text-2xl focus:outline-none" aria-label="Abrir menú">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Nav -->
+      <div id="mobile-menu" class="md:hidden hidden pb-6">
+        <ul class="flex flex-col gap-4">
+          <li>
+            <a href="#inicio"
+              class="mobile-link block text-sm uppercase tracking-wider text-gray-300 hover:text-gold py-2">Inicio</a>
+          </li>
+          <li>
+            <a href="#galeria"
+              class="mobile-link block text-sm uppercase tracking-wider text-gray-300 hover:text-gold py-2">Galería</a>
+          </li>
+          <li>
+            <a href="#servicios"
+              class="mobile-link block text-sm uppercase tracking-wider text-gray-300 hover:text-gold py-2">Servicios</a>
+          </li>
+          <li>
+            <a href="#turnos"
+              class="mobile-link block text-sm uppercase tracking-wider text-gray-300 hover:text-gold py-2">Turnos</a>
+          </li>
+          <li>
+            <a href="#contacto"
+              class="mobile-link block text-sm uppercase tracking-wider text-gray-300 hover:text-gold py-2">Contacto</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section id="inicio" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Background -->
+    <div class="absolute inset-0">
+      <img src="https://images.unsplash.com/photo-1585747860019-8e7e0da6cf09?w=1920&q=80" alt="Barbería Naiot"
+        class="w-full h-full object-cover opacity-30" />
+      <div class="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/80 to-dark"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative text-center px-4 max-w-4xl mx-auto fade-in">
+      <div class="inline-block mb-6">
+        <span
+          class="text-gold text-sm sm:text-base uppercase tracking-[0.3em] font-medium border border-gold/30 px-6 py-2 rounded-full">
+          Barbería Premium
+        </span>
+      </div>
+      <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-wider mb-6 leading-tight">
+        <span class="text-white">NA</span><span class="text-gold">IOT</span>
+      </h1>
+      <p class="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+        Estilo, precisión y actitud. Tu mejor versión empieza acá.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#turnos" class="btn-gold text-dark font-bold px-10 py-4 rounded-full text-sm uppercase tracking-wider">
+          <i class="fas fa-calendar-check mr-2"></i>Reservá tu turno
+        </a>
+        <a href="#galeria"
+          class="border border-gold/40 text-gold font-medium px-10 py-4 rounded-full text-sm uppercase tracking-wider hover:bg-gold/10 transition-all duration-300">
+          <i class="fas fa-images mr-2"></i>Ver trabajos
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <i class="fas fa-chevron-down text-gold/50 text-xl"></i>
+    </div>
+  </section>
+
+  <!-- ========== GALERÍA ========== -->
+  <section id="galeria" class="py-20 sm:py-28 px-4 bg-dark">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 fade-in">
+        <span class="text-gold text-sm uppercase tracking-[0.2em] font-medium">Portfolio</span>
+        <h2 class="text-3xl sm:text-5xl font-bold mt-3 mb-4">
+          Nuestros <span class="text-gold">Trabajos</span>
+        </h2>
+        <div class="w-16 h-0.5 bg-gold mx-auto"></div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        <!-- Gallery Item 1 -->
+        <div class="gallery-item relative rounded-xl overflow-hidden cursor-pointer group aspect-square fade-in">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80" alt="Corte fade"
+            class="w-full h-full object-cover transition-transform duration-500" />
+          <div
+            class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-4">
+            <span class="text-gold font-medium text-sm">Corte Fade</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 2 -->
+        <div class="gallery-item relative rounded-xl overflow-hidden cursor-pointer group aspect-square fade-in">
+          <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80" alt="Corte clásico"
+            class="w-full h-full object-cover transition-transform duration-500" />
+          <div
+            class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-4">
+            <span class="text-gold font-medium text-sm">Corte Clásico</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 3 -->
+        <div class="gallery-item relative rounded-xl overflow-hidden cursor-pointer group aspect-square fade-in">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80" alt="Barba"
+            class="w-full h-full object-cover transition-transform duration-500" />
+          <div
+            class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-4">
+            <span class="text-gold font-medium text-sm">Barba Perfilada</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 4 -->
+        <div class="gallery-item relative rounded-xl overflow-hidden cursor-pointer group aspect-square fade-in">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt="Corte moderno"
+            class="w-full h-full object-cover transition-transform duration-500" />
+          <div
+            class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-4">
+            <span class="text-gold font-medium text-sm">Corte Moderno</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 5 -->
+        <div class="gallery-item relative rounded-xl overflow-hidden cursor-pointer group aspect-square fade-in">
+          <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80" alt="Diseño"
+            class="w-full h-full object-cover transition-transform duration-500" />
+          <div
+            class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-4">
+            <span class="text-gold font-medium text-sm">Diseño</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 6 -->
+        <div class="gallery-item relative rounded-xl overflow-hidden cursor-pointer group aspect-square fade-in">
+          <img src="https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=600&q=80" alt="Afeitado clásico"
+            class="w-full h-full object-cover transition-transform duration-500" />
+          <div
+            class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-4">
+            <span class="text-gold font-medium text-sm">Afeitado Clásico</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 7 -->
+        <div class="gallery-item relative rounded-xl overflow-hidden cursor-pointer group aspect-square fade-in">
+          <img src="https://images.unsplash.com/photo-1596728325488-58c87691e9af?w=600&q=80" alt="Corte degradé"
+            class="w-full h-full object-cover transition-transform duration-500" />
+          <div
+            class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-4">
+            <span class="text-gold font-medium text-sm">Degradé</span>
+          </div>
+        </div>
+
+        <!-- Gallery Item 8 -->
+        <div class="gallery-item relative rounded-xl overflow-hidden cursor-pointer group aspect-square fade-in">
+          <img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?w=600&q=80" alt="Corte texturizado"
+            class="w-full h-full object-cover transition-transform duration-500" />
+          <div
+            class="gallery-overlay absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/30 to-transparent opacity-0 transition-opacity duration-300 flex items-end p-4">
+            <span class="text-gold font-medium text-sm">Texturizado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SERVICIOS ========== -->
+  <section id="servicios" class="py-20 sm:py-28 px-4 bg-dark-surface">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16 fade-in">
+        <span class="text-gold text-sm uppercase tracking-[0.2em] font-medium">Qué ofrecemos</span>
+        <h2 class="text-3xl sm:text-5xl font-bold mt-3 mb-4">
+          Nuestros <span class="text-gold">Servicios</span>
+        </h2>
+        <div class="w-16 h-0.5 bg-gold mx-auto"></div>
+      </div>
+
+      <!-- Servicios individuales -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <!-- Corte -->
+        <div class="service-card bg-dark-card border border-dark-border rounded-2xl p-8 text-center fade-in">
+          <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-gold/10 flex items-center justify-center">
+            <i class="fas fa-cut text-gold text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Corte</h3>
+          <p class="text-gray-400 text-sm mb-4">
+            Corte a medida según tu estilo y personalidad.
+          </p>
+          <span class="text-gold text-3xl font-black">$10.000</span>
+        </div>
+
+        <!-- Barba -->
+        <div class="service-card bg-dark-card border border-dark-border rounded-2xl p-8 text-center fade-in">
+          <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-gold/10 flex items-center justify-center">
+            <i class="fas fa-user text-gold text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Barba</h3>
+          <p class="text-gray-400 text-sm mb-4">
+            Perfilado y recorte de barba con precisión.
+          </p>
+          <span class="text-gold text-3xl font-black">$5.000</span>
+        </div>
+
+        <!-- Afeitado -->
+        <div class="service-card bg-dark-card border border-dark-border rounded-2xl p-8 text-center fade-in">
+          <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-gold/10 flex items-center justify-center">
+            <i class="fas fa-spa text-gold text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Afeitado</h3>
+          <p class="text-gray-400 text-sm mb-4">
+            Afeitado clásico con navaja y toalla caliente.
+          </p>
+          <span class="text-gold text-3xl font-black">$5.000</span>
+        </div>
+
+        <!-- Cejas -->
+        <div class="service-card bg-dark-card border border-dark-border rounded-2xl p-8 text-center fade-in">
+          <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-gold/10 flex items-center justify-center">
+            <i class="fas fa-eye text-gold text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Cejas</h3>
+          <p class="text-gray-400 text-sm mb-4">
+            Perfilado y definición de cejas.
+          </p>
+          <span class="text-gold text-3xl font-black">$2.000</span>
+        </div>
+
+        <!-- Diseños -->
+        <div class="service-card bg-dark-card border border-dark-border rounded-2xl p-8 text-center fade-in">
+          <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-gold/10 flex items-center justify-center">
+            <i class="fas fa-paint-brush text-gold text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Diseños</h3>
+          <p class="text-gray-400 text-sm mb-4">
+            Diseños personalizados con máquina y navaja.
+          </p>
+          <span class="text-gold text-3xl font-black">$3.000</span>
+        </div>
+      </div>
+
+      <!-- Combos -->
+      <div class="text-center mb-10 fade-in">
+        <h3 class="text-2xl sm:text-3xl font-bold">
+          <i class="fas fa-fire text-gold mr-2"></i>Combos
+        </h3>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto mb-16">
+        <!-- Corte + Barba -->
+        <div
+          class="service-card bg-gradient-to-br from-dark-card to-dark border border-gold/20 rounded-2xl p-8 text-center fade-in relative overflow-hidden">
+          <div class="absolute top-3 right-3 bg-gold text-dark text-xs font-bold px-3 py-1 rounded-full uppercase">
+            Popular
+          </div>
+          <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-gold/10 flex items-center justify-center">
+            <i class="fas fa-star text-gold text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Corte + Barba</h3>
+          <p class="text-gray-400 text-sm mb-4">
+            El combo más elegido. Corte y barba perfectos.
+          </p>
+          <span class="text-gold text-3xl font-black">$12.000</span>
+        </div>
+
+        <!-- Completo -->
+        <div
+          class="service-card bg-gradient-to-br from-dark-card to-dark border border-gold/20 rounded-2xl p-8 text-center fade-in relative overflow-hidden">
+          <div class="absolute top-3 right-3 bg-gold text-dark text-xs font-bold px-3 py-1 rounded-full uppercase">
+            Premium
+          </div>
+          <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-gold/10 flex items-center justify-center">
+            <i class="fas fa-crown text-gold text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Completo</h3>
+          <p class="text-gray-400 text-sm mb-2">
+            Corte + Barba + Cejas + Diseño.
+          </p>
+          <p class="text-gray-500 text-xs mb-4">La experiencia completa.</p>
+          <span class="text-gold text-3xl font-black">$15.000</span>
+        </div>
+      </div>
+
+      <!-- Próximamente -->
+      <div class="max-w-2xl mx-auto fade-in">
+        <div class="bg-dark-card border border-dashed border-gold/30 rounded-2xl p-8 text-center">
+          <i class="fas fa-clock text-gold/50 text-4xl mb-4"></i>
+          <h3 class="text-xl font-bold mb-3 text-gold/70">Próximamente</h3>
+          <div class="flex flex-wrap justify-center gap-3">
+            <span class="bg-gold/10 text-gold/80 px-5 py-2 rounded-full text-sm font-medium">
+              <i class="fas fa-palette mr-1"></i>Color
+            </span>
+            <span class="bg-gold/10 text-gold/80 px-5 py-2 rounded-full text-sm font-medium">
+              <i class="fas fa-sun mr-1"></i>Claritos
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TURNOS ========== -->
+  <section id="turnos" class="py-20 sm:py-28 px-4 bg-dark">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-16 fade-in">
+        <span class="text-gold text-sm uppercase tracking-[0.2em] font-medium">Agendá online</span>
+        <h2 class="text-3xl sm:text-5xl font-bold mt-3 mb-4">
+          Reservá tu <span class="text-gold">Turno</span>
+        </h2>
+        <div class="w-16 h-0.5 bg-gold mx-auto mb-4"></div>
+        <p class="text-gray-400">
+          Completá el formulario y te confirmamos por WhatsApp.
+        </p>
+      </div>
+
+      <form id="booking-form" class="bg-dark-card border border-dark-border rounded-2xl p-6 sm:p-10 fade-in">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+          <!-- Nombre -->
+          <div>
+            <label for="nombre" class="block text-sm font-medium text-gray-300 mb-2">
+              <i class="fas fa-user text-gold mr-1"></i>Nombre
+            </label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre"
+              class="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none" />
+          </div>
+
+          <!-- Teléfono -->
+          <div>
+            <label for="telefono" class="block text-sm font-medium text-gray-300 mb-2">
+              <i class="fas fa-phone text-gold mr-1"></i>Teléfono
+            </label>
+            <input type="tel" id="telefono" name="telefono" required placeholder="Tu teléfono"
+              class="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none" />
+          </div>
+        </div>
+
+        <!-- Servicio -->
+        <div class="mb-6">
+          <label for="servicio" class="block text-sm font-medium text-gray-300 mb-2">
+            <i class="fas fa-cut text-gold mr-1"></i>Servicio
+          </label>
+          <select id="servicio" name="servicio" required
+            class="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white focus:outline-none appearance-none cursor-pointer">
+            <option value="" disabled selected>Elegí un servicio</option>
+            <option value="Corte - $10.000">Corte — $10.000</option>
+            <option value="Barba - $5.000">Barba — $5.000</option>
+            <option value="Afeitado - $5.000">Afeitado — $5.000</option>
+            <option value="Cejas - $2.000">Cejas — $2.000</option>
+            <option value="Diseños - $3.000">Diseños — $3.000</option>
+            <option value="Corte + Barba - $12.000">
+              Corte + Barba — $12.000
+            </option>
+            <option value="Completo (Corte+Barba+Cejas+Diseño) - $15.000">
+              Completo (Corte+Barba+Cejas+Diseño) — $15.000
+            </option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+          <!-- Fecha (Custom Calendar Picker) -->
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">
+              <i class="fas fa-calendar text-gold mr-1"></i>Fecha
+            </label>
+            <div id="fecha-wrapper" class="relative">
+              <input type="hidden" id="fecha" name="fecha" required />
+              <div id="fecha-display"
+                class="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white cursor-pointer flex items-center justify-between select-none hover:border-gold/50 transition-colors duration-300">
+                <span id="fecha-text" class="text-gray-500">Elegí una fecha</span>
+                <i class="fas fa-calendar-alt text-gold"></i>
+              </div>
+              <!-- Calendar Dropdown -->
+              <div id="calendar-dropdown"
+                class="hidden absolute top-full left-0 right-0 mt-2 bg-dark-card border border-dark-border rounded-2xl shadow-2xl shadow-black/50 z-50 overflow-hidden">
+                <!-- Calendar Header -->
+                <div class="flex items-center justify-between px-4 py-3 bg-dark-surface border-b border-dark-border">
+                  <button type="button" id="cal-prev"
+                    class="w-8 h-8 rounded-lg flex items-center justify-center text-gold hover:bg-gold/10 transition-colors">
+                    <i class="fas fa-chevron-left text-sm"></i>
+                  </button>
+                  <span id="cal-month-year" class="text-white font-semibold text-sm uppercase tracking-wider"></span>
+                  <button type="button" id="cal-next"
+                    class="w-8 h-8 rounded-lg flex items-center justify-center text-gold hover:bg-gold/10 transition-colors">
+                    <i class="fas fa-chevron-right text-sm"></i>
+                  </button>
+                </div>
+                <!-- Day Names -->
+                <div class="grid grid-cols-7 gap-0 px-3 pt-3 pb-1">
+                  <span class="text-center text-xs font-medium text-gold/70 py-1">Do</span>
+                  <span class="text-center text-xs font-medium text-gold/70 py-1">Lu</span>
+                  <span class="text-center text-xs font-medium text-gold/70 py-1">Ma</span>
+                  <span class="text-center text-xs font-medium text-gold/70 py-1">Mi</span>
+                  <span class="text-center text-xs font-medium text-gold/70 py-1">Ju</span>
+                  <span class="text-center text-xs font-medium text-gold/70 py-1">Vi</span>
+                  <span class="text-center text-xs font-medium text-gold/70 py-1">Sá</span>
+                </div>
+                <!-- Calendar Days -->
+                <div id="cal-days" class="grid grid-cols-7 gap-0 px-3 pb-3">
+                  <!-- Days will be injected by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hora (Custom Select Dropdown) -->
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">
+              <i class="fas fa-clock text-gold mr-1"></i>Hora
+            </label>
+            <div id="hora-wrapper" class="relative">
+              <input type="hidden" id="hora" name="hora" required />
+              <div id="hora-display"
+                class="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white cursor-pointer flex items-center justify-between select-none hover:border-gold/50 transition-colors duration-300">
+                <span id="hora-text" class="text-gray-500">Elegí una hora</span>
+                <i class="fas fa-clock text-gold"></i>
+              </div>
+              <!-- Time Dropdown -->
+              <div id="hora-dropdown"
+                class="hidden absolute top-full left-0 right-0 mt-2 bg-dark-card border border-dark-border rounded-2xl shadow-2xl shadow-black/50 z-50 overflow-hidden">
+                <div class="px-4 py-3 bg-dark-surface border-b border-dark-border">
+                  <span class="text-white font-semibold text-sm uppercase tracking-wider">Horarios disponibles</span>
+                </div>
+                <div id="hora-slots" class="max-h-52 overflow-y-auto p-2 custom-scrollbar">
+                  <!-- Time slots will be injected by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensaje opcional -->
+        <div class="mb-8">
+          <label for="mensaje" class="block text-sm font-medium text-gray-300 mb-2">
+            <i class="fas fa-comment text-gold mr-1"></i>Mensaje (opcional)
+          </label>
+          <textarea id="mensaje" name="mensaje" rows="3" placeholder="¿Algo que quieras agregar?"
+            class="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none resize-none"></textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="submit-btn"
+          class="btn-gold w-full text-dark font-bold py-4 rounded-full text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+          <i class="fab fa-whatsapp text-xl"></i>
+          Enviar por WhatsApp
+        </button>
+
+        <!-- Success message (hidden by default) -->
+        <div id="success-msg" class="hidden mt-6 text-center">
+          <div class="bg-green-900/30 border border-green-700/40 rounded-xl p-4">
+            <i class="fas fa-check-circle text-green-400 text-2xl mb-2"></i>
+            <p class="text-green-400 font-medium">
+              ¡Turno enviado correctamente!
+            </p>
+            <p class="text-green-400/70 text-sm mt-1">
+              Te redirigimos a WhatsApp para confirmar.
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER / CONTACTO ========== -->
+  <footer id="contacto" class="bg-dark-surface border-t border-dark-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Brand -->
+        <div class="fade-in">
+          <h3 class="text-3xl font-black tracking-widest text-gold mb-4">
+            NAIOT
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Barbería premium. Estilo, precisión y actitud en cada corte.
+          </p>
+          <div class="flex gap-4 mt-6">
+            <a href="https://wa.me/5491166210713" target="_blank"
+              class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-dark transition-all duration-300">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="#"
+              class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-dark transition-all duration-300">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#"
+              class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-dark transition-all duration-300">
+              <i class="fab fa-tiktok"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Horarios -->
+        <div class="fade-in">
+          <h4 class="text-lg font-bold mb-4 text-white">Horarios</h4>
+          <ul class="space-y-2 text-gray-400 text-sm">
+            <li class="flex justify-between">
+              <span>Lunes a Viernes</span><span class="text-gold">9:00 – 20:00</span>
+            </li>
+            <li class="flex justify-between">
+              <span>Sábados</span><span class="text-gold">9:00 – 18:00</span>
+            </li>
+            <li class="flex justify-between">
+              <span>Domingos</span><span class="text-red-400">Cerrado</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contacto -->
+        <div class="fade-in">
+          <h4 class="text-lg font-bold mb-4 text-white">Contacto</h4>
+          <ul class="space-y-3 text-gray-400 text-sm">
+            <li class="flex items-center gap-3">
+              <i class="fas fa-phone text-gold"></i>
+              <a href="tel:+5491166210713" class="hover:text-gold transition-colors">+54 9 11 6621-0713</a>
+            </li>
+            <li class="flex items-center gap-3">
+              <i class="fab fa-whatsapp text-gold"></i>
+              <a href="https://wa.me/5491166210713" target="_blank"
+                class="hover:text-gold transition-colors">WhatsApp</a>
+            </li>
+            <li class="flex items-center gap-3">
+              <i class="fas fa-map-marker-alt text-gold"></i>
+              <span>Buenos Aires, Argentina</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="border-t border-dark-border mt-12 pt-8 text-center">
+        <p class="text-gray-500 text-sm">
+          © 2026 NAIOT Barbería. Todos los derechos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/5491166210713" target="_blank"
+    class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:bg-green-400 transition-all duration-300 hover:scale-110"
+    aria-label="Contactar por WhatsApp">
+    <i class="fab fa-whatsapp text-white text-2xl"></i>
+  </a>
+
+  <script src="main.js"></script>
+</body>
+
 </html>
