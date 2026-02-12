@@ -680,12 +680,24 @@
 
       <!-- Botones -->
       <div class="space-y-3">
+        <p class="text-xs text-center text-gray-400 mb-1">
+          <i class="fas fa-arrow-down mr-1"></i>Seguí estos pasos para confirmar tu turno
+        </p>
         <a id="modal-mp-link" href="#" target="_blank"
           class="mp-btn w-full py-3 rounded-full text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+          <span
+            class="bg-white/20 w-5 h-5 rounded-full inline-flex items-center justify-center text-xs font-bold mr-1">1</span>
           <i class="fas fa-dollar-sign"></i>Pagar seña con Mercado Pago
         </a>
-        <button id="modal-wa-btn" type="button"
-          class="w-full py-3 rounded-full text-sm uppercase tracking-wider font-bold border border-green-500/40 text-green-400 hover:bg-green-500/10 transition-all duration-300 flex items-center justify-center gap-2">
+        <div id="modal-step-indicator"
+          class="text-xs text-center text-yellow-400/80 mt-2 flex items-center justify-center gap-1">
+          <i class="fas fa-info-circle mr-1"></i>
+          <span>Primero aboná la seña, luego enviá por WhatsApp</span>
+        </div>
+        <button id="modal-wa-btn" type="button" disabled
+          class="w-full py-3 rounded-full text-sm uppercase tracking-wider font-bold border border-green-500/40 text-green-400 transition-all duration-300 flex items-center justify-center gap-2 opacity-40 cursor-not-allowed">
+          <span
+            class="bg-green-500/20 w-5 h-5 rounded-full inline-flex items-center justify-center text-xs font-bold mr-1">2</span>
           <i class="fab fa-whatsapp text-lg"></i>Enviar por WhatsApp
         </button>
         <button id="modal-close-btn" type="button"

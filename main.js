@@ -346,7 +346,7 @@ renderCalendar();
 // ---- Mercado Pago links por servicio (REEMPLAZAR con tus links reales) ----
 const MERCADO_PAGO_LINKS = {
   "Corte - $10.000": "https://mpago.li/1kNQn8Z",
-  "Barba - $5.000": "https://link.mercadopago.com.ar/TU_LINK_BARBA",
+  "Barba - $5.000": "https://mpago.li/1kNQn8Z",
   "Afeitado - $5.000": "https://link.mercadopago.com.ar/TU_LINK_AFEITADO",
   "Cejas - $2.000": "https://link.mercadopago.com.ar/TU_LINK_CEJAS",
   "Diseños - $3.000": "https://link.mercadopago.com.ar/TU_LINK_DISENOS",
@@ -518,6 +518,21 @@ bookingForm.addEventListener("submit", (e) => {
     // Store WhatsApp URL for the WA button
     modalWaBtn.dataset.waUrl = whatsappURL;
 
+    // Disable WhatsApp button until payment is done
+    modalWaBtn.disabled = true;
+    modalWaBtn.classList.add("opacity-40", "cursor-not-allowed");
+    modalWaBtn.classList.remove("hover:bg-green-500/10");
+
+    // Show/reset the payment step indicator
+    const stepIndicator = document.getElementById("modal-step-indicator");
+    if (stepIndicator) {
+      stepIndicator.innerHTML = `
+        <i class="fas fa-info-circle mr-1"></i>
+        <span>Primero aboná la seña, luego enviá por WhatsApp</span>
+      `;
+      stepIndicator.className = "text-xs text-center text-yellow-400/80 mt-2 flex items-center justify-center gap-1";
+    }
+
     // Show modal
     modalSena.classList.add("active");
   } else {
@@ -534,7 +549,28 @@ bookingForm.addEventListener("submit", (e) => {
 });
 
 // ---- Modal events ----
+
+// When clicking Mercado Pago link, enable WhatsApp button after a moment
+modalMpLink.addEventListener("click", () => {
+  // Enable WhatsApp button after clicking MP link
+  setTimeout(() => {
+    modalWaBtn.disabled = false;
+    modalWaBtn.classList.remove("opacity-40", "cursor-not-allowed");
+    modalWaBtn.classList.add("hover:bg-green-500/10");
+
+    const stepIndicator = document.getElementById("modal-step-indicator");
+    if (stepIndicator) {
+      stepIndicator.innerHTML = `
+        <i class="fas fa-check-circle mr-1"></i>
+        <span>¡Listo! Ahora enviá la confirmación por WhatsApp</span>
+      `;
+      stepIndicator.className = "text-xs text-center text-green-400 mt-2 flex items-center justify-center gap-1 animate-pulse";
+    }
+  }, 1000);
+});
+
 modalWaBtn.addEventListener("click", () => {
+  if (modalWaBtn.disabled) return;
   const waUrl = modalWaBtn.dataset.waUrl;
   if (waUrl) window.open(waUrl, "_blank");
   modalSena.classList.remove("active");
@@ -547,11 +583,6 @@ modalWaBtn.addEventListener("click", () => {
 
 modalCloseBtn.addEventListener("click", () => {
   modalSena.classList.remove("active");
-  successMsg.classList.remove("hidden");
-  setTimeout(() => {
-    successMsg.classList.add("hidden");
-    resetForm();
-  }, 4000);
 });
 
 // Close modal on overlay click
