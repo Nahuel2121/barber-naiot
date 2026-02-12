@@ -512,8 +512,8 @@ bookingForm.addEventListener("submit", (e) => {
     modalSenaMonto.textContent = formatPrice(sena);
 
     // Set Mercado Pago link
-    const mpLink = MERCADO_PAGO_LINKS[servicio] || "#";
-    modalMpLink.href = mpLink;
+    const mpLink = MERCADO_PAGO_LINKS[servicio] || "";
+    modalMpLink.dataset.mpUrl = mpLink;
 
     // Store WhatsApp URL for the WA button
     modalWaBtn.dataset.waUrl = whatsappURL;
@@ -550,23 +550,31 @@ bookingForm.addEventListener("submit", (e) => {
 
 // ---- Modal events ----
 
-// When clicking Mercado Pago link, enable WhatsApp button after a moment
-modalMpLink.addEventListener("click", () => {
-  // Enable WhatsApp button after clicking MP link
-  setTimeout(() => {
-    modalWaBtn.disabled = false;
-    modalWaBtn.classList.remove("opacity-40", "cursor-not-allowed");
-    modalWaBtn.classList.add("hover:bg-green-500/10");
+// When clicking Mercado Pago button, open the link and enable WhatsApp button
+modalMpLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  const mpUrl = modalMpLink.dataset.mpUrl;
+  if (mpUrl && mpUrl !== "") {
+    // Open Mercado Pago in a new tab
+    window.open(mpUrl, "_blank", "noopener,noreferrer");
+  } else {
+    alert("El link de pago para este servicio aún no está configurado.");
+    return;
+  }
 
-    const stepIndicator = document.getElementById("modal-step-indicator");
-    if (stepIndicator) {
-      stepIndicator.innerHTML = `
-        <i class="fas fa-check-circle mr-1"></i>
-        <span>¡Listo! Ahora enviá la confirmación por WhatsApp</span>
-      `;
-      stepIndicator.className = "text-xs text-center text-green-400 mt-2 flex items-center justify-center gap-1 animate-pulse";
-    }
-  }, 1000);
+  // Enable WhatsApp button after clicking MP link
+  modalWaBtn.disabled = false;
+  modalWaBtn.classList.remove("opacity-40", "cursor-not-allowed");
+  modalWaBtn.classList.add("hover:bg-green-500/10");
+
+  const stepIndicator = document.getElementById("modal-step-indicator");
+  if (stepIndicator) {
+    stepIndicator.innerHTML = `
+      <i class="fas fa-check-circle mr-1"></i>
+      <span>¡Listo! Ahora enviá la confirmación por WhatsApp</span>
+    `;
+    stepIndicator.className = "text-xs text-center text-green-400 mt-2 flex items-center justify-center gap-1 animate-pulse";
+  }
 });
 
 modalWaBtn.addEventListener("click", () => {
