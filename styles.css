@@ -199,3 +199,113 @@ textarea:focus {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #c8a84e;
 }
+
+/* ---- Toggle Switch (Seña) ---- */
+.toggle-switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #2a2a2a;
+  border-radius: 26px;
+  border: 1px solid #3a3a3a;
+  transition: all 0.3s ease;
+}
+
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: #666;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: linear-gradient(135deg, #c8a84e, #e0c675);
+  border-color: #c8a84e;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(22px);
+  background: #0a0a0a;
+}
+
+/* ---- Deposit Info Box ---- */
+.deposit-info {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+  margin-top: 0;
+}
+
+.deposit-info.active {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+/* ---- Confirmation Modal ---- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 1rem;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  max-width: 460px;
+  width: 100%;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.mp-btn {
+  background: #009ee3;
+  color: white;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.mp-btn:hover {
+  background: #007bb5;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 158, 227, 0.3);
+}

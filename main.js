@@ -253,8 +253,19 @@ function renderTimeSlots() {
     return;
   }
 
-  const slots = generateTimeSlots(schedule.open, schedule.close);
+  let slots = generateTimeSlots(schedule.open, schedule.close);
   const bookedSlots = getBookedSlotsForDate(dateStr);
+
+  // Filter out past time slots if the selected date is today
+  const now = new Date();
+  const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  if (dateStr === todayStr) {
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    slots = slots.filter((time) => {
+      const [h, m] = time.split(":").map(Number);
+      return h * 60 + m > currentMinutes;
+    });
+  }
 
   if (slots.length === 0) {
     horaSlots.innerHTML = `
@@ -329,9 +340,117 @@ document.addEventListener("click", (e) => {
 renderCalendar();
 
 // ================================================
-// BOOKING FORM → WHATSAPP
+// BOOKING FORM → WHATSAPP + SEÑA MERCADO PAGO
 // ================================================
 
+// ---- Mercado Pago links por servicio (REEMPLAZAR con tus links reales) ----
+const MERCADO_PAGO_LINKS = {
+  "Corte - $10.000": "https://mpago.li/1kNQn8Z",
+  "Barba - $5.000": "https://link.mercadopago.com.ar/TU_LINK_BARBA",
+  "Afeitado - $5.000": "https://link.mercadopago.com.ar/TU_LINK_AFEITADO",
+  "Cejas - $2.000": "https://link.mercadopago.com.ar/TU_LINK_CEJAS",
+  "Diseños - $3.000": "https://link.mercadopago.com.ar/TU_LINK_DISENOS",
+  "Corte + Barba - $12.000": "https://link.mercadopago.com.ar/TU_LINK_CORTE_BARBA",
+  "Completo (Corte+Barba+Cejas+Diseño) - $15.000": "https://link.mercadopago.com.ar/TU_LINK_COMPLETO",
+};
+
+// ---- Seña toggle logic ----
+const servicioSelect = document.getElementById("servicio");
+const senaSection = document.getElementById("sena-section");
+const senaToggle = document.getElementById("sena-toggle");
+const depositInfo = document.getElementById("deposit-info");
+const senaMonto = document.getElementById("sena-monto");
+
+// Modal elements
+const modalSena = document.getElementById("modal-sena");
+const modalServicio = document.getElementById("modal-servicio");
+const modalFecha = document.getElementById("modal-fecha");
+const modalHora = document.getElementById("modal-hora");
+const modalTotal = document.getElementById("modal-total");
+const modalSenaMonto = document.getElementById("modal-sena-monto");
+const modalMpLink = document.getElementById("modal-mp-link");
+const modalWaBtn = document.getElementById("modal-wa-btn");
+const modalCloseBtn = document.getElementById("modal-close-btn");
+
+function formatPrice(amount) {
+  return "$" + amount.toLocaleString("es-AR");
+}
+
+function getSelectedPrice() {
+  const opt = servicioSelect.options[servicioSelect.selectedIndex];
+  return opt ? parseInt(opt.dataset.price || "0", 10) : 0;
+}
+
+function updateSenaDisplay() {
+  const price = getSelectedPrice();
+  const sena = Math.round(price / 2);
+  senaMonto.textContent = formatPrice(sena);
+}
+
+// Show seña section when a service is selected
+servicioSelect.addEventListener("change", () => {
+  if (servicioSelect.value) {
+    senaSection.style.display = "block";
+    updateSenaDisplay();
+  } else {
+    senaSection.style.display = "none";
+    senaToggle.checked = false;
+    depositInfo.classList.remove("active");
+  }
+});
+
+// Toggle deposit info visibility
+senaToggle.addEventListener("change", () => {
+  if (senaToggle.checked) {
+    depositInfo.classList.add("active");
+    updateSenaDisplay();
+  } else {
+    depositInfo.classList.remove("active");
+  }
+});
+
+// Helper: build WhatsApp message
+function buildWhatsAppMessage(nombre, telefono, servicio, fechaFormateada, hora, mensaje, conSena) {
+  let text = `--- NUEVO TURNO - NAIOT BARBERIA ---\n\n`;
+  text += `* Nombre: ${nombre}\n`;
+  text += `* Telefono: ${telefono}\n`;
+  text += `* Servicio: ${servicio}\n`;
+  text += `* Fecha: ${fechaFormateada}\n`;
+  text += `* Hora: ${hora}\n`;
+
+  if (conSena) {
+    const price = getSelectedPrice();
+    const sena = Math.round(price / 2);
+    text += `* Sena abonada: ${formatPrice(sena)} (50%)\n`;
+  }
+
+  if (mensaje) {
+    text += `* Mensaje: ${mensaje}\n`;
+  }
+
+  text += `\nEnviado desde naiot.lat`;
+  return text;
+}
+
+// Helper: reset form to initial state
+function resetForm() {
+  bookingForm.reset();
+  selectedDate = null;
+  fechaInput.value = "";
+  horaInput.value = "";
+  fechaText.textContent = "Elegí una fecha";
+  fechaText.classList.remove("text-white");
+  fechaText.classList.add("text-gray-500");
+  horaText.textContent = "Elegí una hora";
+  horaText.classList.remove("text-white");
+  horaText.classList.add("text-gray-500");
+  senaSection.style.display = "none";
+  senaToggle.checked = false;
+  depositInfo.classList.remove("active");
+  renderCalendar();
+}
+
+// ---- Form submit ----
 bookingForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -344,7 +463,6 @@ bookingForm.addEventListener("submit", (e) => {
 
   // Validate
   if (!nombre || !telefono || !servicio || !fecha || !hora) {
-    // Highlight missing fields
     if (!fecha) {
       fechaDisplay.style.borderColor = "#ef4444";
       setTimeout(() => { fechaDisplay.style.borderColor = ""; }, 2000);
@@ -367,21 +485,9 @@ bookingForm.addEventListener("submit", (e) => {
     },
   );
 
-  // Build WhatsApp message
-  let text = `🔔 *Nuevo turno - NAIOT Barbería*\n\n`;
-  text += `👤 *Nombre:* ${nombre}\n`;
-  text += `📱 *Teléfono:* ${telefono}\n`;
-  text += `✂️ *Servicio:* ${servicio}\n`;
-  text += `📅 *Fecha:* ${fechaFormateada}\n`;
-  text += `🕐 *Hora:* ${hora}\n`;
-
-  if (mensaje) {
-    text += `💬 *Mensaje:* ${mensaje}\n`;
-  }
-
-  text += `\n✅ Enviado desde naiot.com`;
-
-  const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  const conSena = senaToggle.checked;
+  const whatsappText = buildWhatsAppMessage(nombre, telefono, servicio, fechaFormateada, hora, mensaje, conSena);
+  const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText)}`;
 
   // Save to localStorage
   saveTurno({
@@ -391,34 +497,68 @@ bookingForm.addEventListener("submit", (e) => {
     fecha,
     hora,
     mensaje,
+    sena: conSena,
     timestamp: Date.now(),
   });
 
-  // Show success message
+  if (conSena) {
+    // Show modal with summary
+    const price = getSelectedPrice();
+    const sena = Math.round(price / 2);
+    modalServicio.textContent = servicio;
+    modalFecha.textContent = fechaFormateada;
+    modalHora.textContent = hora + " hs";
+    modalTotal.textContent = formatPrice(price);
+    modalSenaMonto.textContent = formatPrice(sena);
+
+    // Set Mercado Pago link
+    const mpLink = MERCADO_PAGO_LINKS[servicio] || "#";
+    modalMpLink.href = mpLink;
+
+    // Store WhatsApp URL for the WA button
+    modalWaBtn.dataset.waUrl = whatsappURL;
+
+    // Show modal
+    modalSena.classList.add("active");
+  } else {
+    // No seña: go directly to WhatsApp
+    successMsg.classList.remove("hidden");
+    setTimeout(() => {
+      window.open(whatsappURL, "_blank");
+    }, 500);
+    setTimeout(() => {
+      successMsg.classList.add("hidden");
+      resetForm();
+    }, 4000);
+  }
+});
+
+// ---- Modal events ----
+modalWaBtn.addEventListener("click", () => {
+  const waUrl = modalWaBtn.dataset.waUrl;
+  if (waUrl) window.open(waUrl, "_blank");
+  modalSena.classList.remove("active");
   successMsg.classList.remove("hidden");
-
-  // Open WhatsApp
   setTimeout(() => {
-    window.open(whatsappURL, "_blank");
-  }, 500);
-
-  // Reset form after a delay
-  setTimeout(() => {
-    bookingForm.reset();
     successMsg.classList.add("hidden");
-
-    // Reset custom pickers
-    selectedDate = null;
-    fechaInput.value = "";
-    horaInput.value = "";
-    fechaText.textContent = "Elegí una fecha";
-    fechaText.classList.remove("text-white");
-    fechaText.classList.add("text-gray-500");
-    horaText.textContent = "Elegí una hora";
-    horaText.classList.remove("text-white");
-    horaText.classList.add("text-gray-500");
-    renderCalendar();
+    resetForm();
   }, 4000);
+});
+
+modalCloseBtn.addEventListener("click", () => {
+  modalSena.classList.remove("active");
+  successMsg.classList.remove("hidden");
+  setTimeout(() => {
+    successMsg.classList.add("hidden");
+    resetForm();
+  }, 4000);
+});
+
+// Close modal on overlay click
+modalSena.addEventListener("click", (e) => {
+  if (e.target === modalSena) {
+    modalSena.classList.remove("active");
+  }
 });
 
 // ---- LocalStorage for bookings ----

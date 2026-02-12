@@ -124,7 +124,7 @@
         <span class="text-white">NA</span><span class="text-gold">IOT</span>
       </h1>
       <p class="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-        Estilo, precisión y actitud. Tu mejor versión empieza acá.
+        La elegancia está en los detalles, donde la barbería es un arte.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="#turnos" class="btn-gold text-dark font-bold px-10 py-4 rounded-full text-sm uppercase tracking-wider">
@@ -415,18 +415,46 @@
           <select id="servicio" name="servicio" required
             class="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white focus:outline-none appearance-none cursor-pointer">
             <option value="" disabled selected>Elegí un servicio</option>
-            <option value="Corte - $10.000">Corte — $10.000</option>
-            <option value="Barba - $5.000">Barba — $5.000</option>
-            <option value="Afeitado - $5.000">Afeitado — $5.000</option>
-            <option value="Cejas - $2.000">Cejas — $2.000</option>
-            <option value="Diseños - $3.000">Diseños — $3.000</option>
-            <option value="Corte + Barba - $12.000">
+            <option value="Corte - $10.000" data-price="10000">Corte — $10.000</option>
+            <option value="Barba - $5.000" data-price="5000">Barba — $5.000</option>
+            <option value="Afeitado - $5.000" data-price="5000">Afeitado — $5.000</option>
+            <option value="Cejas - $2.000" data-price="2000">Cejas — $2.000</option>
+            <option value="Diseños - $3.000" data-price="3000">Diseños — $3.000</option>
+            <option value="Corte + Barba - $12.000" data-price="12000">
               Corte + Barba — $12.000
             </option>
-            <option value="Completo (Corte+Barba+Cejas+Diseño) - $15.000">
+            <option value="Completo (Corte+Barba+Cejas+Diseño) - $15.000" data-price="15000">
               Completo (Corte+Barba+Cejas+Diseño) — $15.000
             </option>
           </select>
+
+          <!-- Toggle Seña 50% -->
+          <div id="sena-section" class="mt-4" style="display: none;">
+            <div class="flex items-center justify-between bg-dark rounded-xl border border-dark-border px-4 py-3">
+              <div class="flex items-center gap-3">
+                <i class="fas fa-hand-holding-usd text-gold text-lg"></i>
+                <span class="text-sm font-medium text-gray-300">Abonar seña del 50%</span>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="sena-toggle" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <!-- Deposit info (animated) -->
+            <div id="deposit-info" class="deposit-info">
+              <div class="bg-dark rounded-xl border border-gold/20 p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-sm text-gray-400">Monto de la seña:</span>
+                  <span id="sena-monto" class="text-gold text-xl font-black">$0</span>
+                </div>
+                <p class="text-xs text-gray-500">
+                  <i class="fas fa-info-circle mr-1"></i>Serás redirigido a Mercado Pago para abonar la seña. El resto
+                  se abona en el local.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
@@ -550,11 +578,11 @@
               class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-dark transition-all duration-300">
               <i class="fab fa-whatsapp"></i>
             </a>
-            <a href="#"
+            <a href="https://www.instagram.com/naiotbarberia_?igsh=MXZnaW1wM2c4M20zag=="
               class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-dark transition-all duration-300">
               <i class="fab fa-instagram"></i>
             </a>
-            <a href="#"
+            <a href="https://www.tiktok.com/@naiot1?_r=1&_t=ZS-93rrsxmrZVF"
               class="w-10 h-10 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gold hover:bg-gold hover:text-dark transition-all duration-300">
               <i class="fab fa-tiktok"></i>
             </a>
@@ -613,6 +641,60 @@
     aria-label="Contactar por WhatsApp">
     <i class="fab fa-whatsapp text-white text-2xl"></i>
   </a>
+
+  <!-- ========== MODAL CONFIRMACIÓN SEÑA ========== -->
+  <div id="modal-sena" class="modal-overlay">
+    <div class="modal-content">
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/10 flex items-center justify-center">
+          <i class="fas fa-receipt text-gold text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-1">Confirmá tu seña</h3>
+        <p class="text-gray-400 text-sm">Revisá los datos y aboná la seña por Mercado Pago</p>
+      </div>
+
+      <!-- Resumen -->
+      <div class="bg-dark rounded-xl border border-dark-border p-4 mb-6 space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span class="text-gray-400">Servicio:</span>
+          <span id="modal-servicio" class="text-white font-medium"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-400">Fecha:</span>
+          <span id="modal-fecha" class="text-white font-medium"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-400">Hora:</span>
+          <span id="modal-hora" class="text-white font-medium"></span>
+        </div>
+        <div class="border-t border-dark-border my-2"></div>
+        <div class="flex justify-between items-center">
+          <span class="text-gray-400">Total del servicio:</span>
+          <span id="modal-total" class="text-white font-bold"></span>
+        </div>
+        <div class="flex justify-between items-center">
+          <span class="text-gold font-medium">Seña (50%):</span>
+          <span id="modal-sena-monto" class="text-gold text-xl font-black"></span>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="space-y-3">
+        <a id="modal-mp-link" href="#" target="_blank"
+          class="mp-btn w-full py-3 rounded-full text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+          <i class="fas fa-dollar-sign"></i>Pagar seña con Mercado Pago
+        </a>
+        <button id="modal-wa-btn" type="button"
+          class="w-full py-3 rounded-full text-sm uppercase tracking-wider font-bold border border-green-500/40 text-green-400 hover:bg-green-500/10 transition-all duration-300 flex items-center justify-center gap-2">
+          <i class="fab fa-whatsapp text-lg"></i>Enviar por WhatsApp
+        </button>
+        <button id="modal-close-btn" type="button"
+          class="w-full py-3 rounded-full text-sm uppercase tracking-wider font-medium text-gray-500 hover:text-gray-300 transition-colors duration-300">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
 
   <script src="main.js"></script>
 </body>
