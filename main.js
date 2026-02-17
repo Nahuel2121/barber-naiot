@@ -347,7 +347,6 @@ renderCalendar();
 const MERCADO_PAGO_LINKS = {
   "Corte - $10.000": "https://mpago.li/1kNQn8Z",
   "Barba - $5.000": "https://mpago.li/1kNQn8Z",
-  "Afeitado - $5.000": "https://link.mercadopago.com.ar/TU_LINK_AFEITADO",
   "Cejas - $2.000": "https://link.mercadopago.com.ar/TU_LINK_CEJAS",
   "Diseños - $3.000": "https://link.mercadopago.com.ar/TU_LINK_DISENOS",
   "Corte + Barba - $12.000": "https://link.mercadopago.com.ar/TU_LINK_CORTE_BARBA",
